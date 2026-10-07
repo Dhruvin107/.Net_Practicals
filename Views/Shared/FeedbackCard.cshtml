@@ -1,0 +1,109 @@
+﻿@model PRACTICAL_7.Models.Feedback
+
+@{
+    ViewBag.Title = "FeedbackCard";
+}
+
+<div class="container">
+    <h2>Feedback Card</h2>
+
+    <!-- Feedback Card -->
+    <div class="panel panel-default"
+         style="margin-bottom: 15px; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+
+        <h4>
+            @Model.UserName
+            <small>@Model.Email</small>
+        </h4>
+
+        <p>
+            <strong>Rating:</strong> @Model.Rating / 5
+        </p>
+
+        <p>
+            @Model.Comments
+        </p>
+    </div>
+
+    <!-- Feedback Form -->
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.UserName)
+
+            @Html.TextBoxFor(
+                model => model.UserName,
+                new { @class = "form-control" }
+            )
+
+            @Html.ValidationMessageFor(
+                model => model.UserName,
+                "",
+                new { @class = "text-danger" }
+            )
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Email)
+
+            @Html.EditorFor(
+                model => model.Email,
+                new { htmlAttributes = new { @class = "form-control" } }
+            )
+
+            @Html.ValidationMessageFor(
+                model => model.Email,
+                "",
+                new { @class = "text-danger" }
+            )
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Rating)
+
+            @Html.TextBoxFor(
+                model => model.Rating,
+                new
+                {
+                    @class = "form-control",
+                    type = "number",
+                    min = "1",
+                    max = "5"
+                }
+            )
+
+            @Html.ValidationMessageFor(
+                model => model.Rating,
+                "",
+                new { @class = "text-danger" }
+            )
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Comments)
+
+            @Html.TextAreaFor(
+                model => model.Comments,
+                new
+                {
+                    @class = "form-control",
+                    rows = "4"
+                }
+            )
+
+            @Html.ValidationMessageFor(
+                model => model.Comments,
+                "",
+                new { @class = "text-danger" }
+            )
+        </div>
+
+        <div class="form-group" style="margin-top: 15px;">
+            <input type="submit"
+                   value="Submit"
+                   class="btn btn-primary" />
+        </div>
+    }
+</div>
